@@ -30,5 +30,5 @@ public interface ProductService {
 
     Page<Product>  getProoductWithPaginationAndSorting(int offset, int pageSize, String field);
 
-    ByteArrayInputStream getDataDownload() throws IOException;
+
 }

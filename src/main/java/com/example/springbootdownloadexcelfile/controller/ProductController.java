@@ -5,15 +5,8 @@ package com.example.springbootdownloadexcelfile.controller;
 import com.example.springbootdownloadexcelfile.entity.Product;
 import com.example.springbootdownloadexcelfile.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -79,17 +72,5 @@ public class ProductController {
     private Page<Product> getProductsWithPaginationAndSort2(@PathVariable int offset, @PathVariable int pageSize,@PathVariable String field) {
         Page<Product> productsWithPagination = productService.findProductsWithPaginationAndSorting(offset, pageSize, field);
         return productsWithPagination ;
-    }
-
-    @GetMapping("/download")
-    private ResponseEntity<InputStreamResource> downlaod() throws IOException {
-       String fileName  = "products.xlsx";
-        ByteArrayInputStream  byteArrayInputStream  = productService.getDataDownload();
-        InputStreamResource  inputStreamResource  = new InputStreamResource(byteArrayInputStream);
-
-         ResponseEntity<InputStreamResource>  responseEntity =ResponseEntity.ok()
-                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel")).body(inputStreamResource);
-    return responseEntity;
     }
 }

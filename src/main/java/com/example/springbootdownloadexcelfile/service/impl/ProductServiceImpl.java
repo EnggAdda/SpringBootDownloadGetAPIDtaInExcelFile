@@ -4,7 +4,7 @@ package com.example.springbootdownloadexcelfile.service.impl;
 import com.example.springbootdownloadexcelfile.entity.Product;
 import com.example.springbootdownloadexcelfile.repository.ProductRepo;
 import com.example.springbootdownloadexcelfile.service.ProductService;
-import com.example.springbootdownloadexcelfile.util.ExcelUtil;
+
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,14 +66,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> getProoductWithPaginationAndSorting(int offset, int pageSize, String field) {
         return productRepo.findAll(PageRequest.of(offset,pageSize).withSort(Sort.by(field)));
-    }
-
-    @Override
-    public ByteArrayInputStream getDataDownload() throws IOException {
-        List<Product> list = productRepo.findAll();
-        ByteArrayInputStream byteArrayInputStream =
-                ExcelUtil.dataToExcel(list);
-        return byteArrayInputStream;
     }
 
     @PostConstruct
